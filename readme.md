@@ -12,3 +12,6 @@
  API 노션 참고 : 
 https://www.notion.so/TodoList-Api-6eef2385c4d8437c83346001461c0b45
 --------------------------------
+
+Jenkins : http://3.35.218.236/jenkins/
+운영 URL : http://3.35.218.236/api/
