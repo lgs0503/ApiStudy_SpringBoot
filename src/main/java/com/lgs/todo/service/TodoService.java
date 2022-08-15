@@ -14,5 +14,7 @@ public interface TodoService {
     public void insert(Todo todo);
     public void update(Todo todo);
     public void delete(Todo todo);
+    public void deleteAll();
+
 
 }

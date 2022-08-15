@@ -72,6 +72,11 @@ public class TodoController {
         HttpMessage message = new HttpMessage();
 
         try{
+
+            if (todo.getIdx() == 0 ){
+                throw new Exception();
+            }
+
             todo = Todo.builder()
                     .idx(todo.getIdx())
                     .title(todo.getTitle())
@@ -79,7 +84,14 @@ public class TodoController {
                     .createUser(todo.getCreateUser())
                     .build();
 
-            todoService.update(todo);
+            Long count = todoService.searchListCount(todo);
+
+            if (count > 0) {
+                todoService.update(todo);
+            } else {
+                throw new Exception();
+            }
+
         } catch(Exception e){
             message.setStatus("404");
         }
@@ -95,6 +107,21 @@ public class TodoController {
 
         try{
             todoService.delete(todo);
+        } catch(Exception e){
+            message.setStatus("404");
+        }
+
+        return ResponseEntity.ok()
+                .headers(HttpHeaderJsonType.getHeader())
+                .body(message.getMessage());
+    }
+
+    @DeleteMapping("/all")
+    public ResponseEntity deleteAll(){
+        HttpMessage message = new HttpMessage();
+
+        try{
+            todoService.deleteAll();
         } catch(Exception e){
             message.setStatus("404");
         }

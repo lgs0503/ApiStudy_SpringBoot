@@ -4,6 +4,7 @@ import com.lgs.todo.entitiy.QTodo;
 import com.lgs.todo.entitiy.Todo;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -47,16 +48,31 @@ public class TodoRepositoryCustomImpl implements TodoRepositoryCustom {
                 .get(0);//fetchCount() 대신 사용 - QueryDSL 패치되서 안씀
     }
 
+    @Override
+    public Todo search(Long idx) {
+
+        QTodo qTodo = QTodo.todo;
+
+        Todo todo = new Todo();
+        todo.setIdx(idx);
+
+        BooleanBuilder builder = new BooleanBuilder();
+        builderCondition(builder, todo, qTodo);
+
+        return jpaQueryFactory
+                .select(qTodo)
+                .from(qTodo)
+                .where(builder)
+                .fetch()
+                .get(0);
+    }
+
     private void builderCondition(BooleanBuilder builder, Todo todo, QTodo qTodo){
-        /* 조건 조회 */
-/*        if(!ObjectUtils.isEmpty(banner.getUseYn())) {
-            builder.and(qBanner.useYn.eq(banner.getUseYn()));
+
+        if(!ObjectUtils.isEmpty(todo.getIdx())){
+            if(todo.getIdx() != 0) {
+                builder.and(qTodo.idx.eq(todo.getIdx()));
+            }
         }
-        if(!ObjectUtils.isEmpty(banner.getBannerName())) {
-            builder.and(qBanner.bannerName.eq(banner.getBannerName()));
-        }
-        if(!ObjectUtils.isEmpty(banner.getBannerType())) {
-            builder.and(qBanner.bannerType.eq(banner.getBannerType()));
-        }*/
     }
 }

@@ -26,7 +26,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public Todo search(Long idx) {
-        return (Todo) todoRepository.findAllById(Collections.singleton(idx));
+        return todoRepository.search(idx);
     }
 
     @Override
@@ -42,5 +42,10 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public void delete(Todo todo) {
         todoRepository.delete(todo);
+    }
+
+    @Override
+    public void deleteAll() {
+        todoRepository.deleteAll();
     }
 }

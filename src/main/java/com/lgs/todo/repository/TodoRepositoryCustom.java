@@ -8,4 +8,5 @@ public interface TodoRepositoryCustom {
 
     List<Todo> searchList(Todo banner);
     Long searchListCount(Todo banner);
+    Todo search(Long idx);
 }

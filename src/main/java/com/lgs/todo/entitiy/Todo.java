@@ -23,7 +23,6 @@ public class Todo {
     private String createUser;
 
     private LocalDateTime createdDate = LocalDateTime.now();
-    private LocalDateTime updateDate = LocalDateTime.now();
 
     @Builder
     public Todo(long idx, String title, String content, String createUser) {
